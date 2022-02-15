@@ -1,0 +1,2 @@
+tero@Ubuntu2110DockerTestTERU:~/docker/back$ docker run -p 8080:8080 backend
+

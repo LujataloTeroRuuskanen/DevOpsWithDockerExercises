@@ -1,0 +1,2 @@
+tero@Ubuntu2110DockerTestTERU:~/docker/front$ docker run -p 5000:5000 frontend
+
