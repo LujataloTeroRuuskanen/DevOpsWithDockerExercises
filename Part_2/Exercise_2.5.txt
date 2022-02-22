@@ -1,0 +1,3 @@
+tero@Ubuntu2110DockerTestTERU:~/docker/load$ docker-compose up
+tero@Ubuntu2110DockerTestTERU:~/docker/load$ docker-compose up --scale compute=5
+
