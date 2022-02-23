@@ -1,0 +1,15 @@
+Changes in the backend Dockerfile:
+Removal of unnecessary REQUEST_ORIGIN environment variable
+
+- ENV REQUEST_ORIGIN=http://localhost:5000
+
+Changes in the frontend Dockerfile
+The backend URL was changed to port 80 and '/api' was added to the URL so that the nginx reverse proxy forwards the backend requests to http://back/8080 (back is the (DNS) name of the backend service in docker-compose.yml)
+
+- ENV REACT_APP_BACKEND_URL=http://localhost:8080/
++ ENV REACT_APP_BACKEND_URL=http://localhost/api/
+
+Changes to docker-compose.yml.
+
+Removed the ports: definitions from the backend service and the frontend service because the user's browser does not need direct access to the backend and frontend containers, only to the nginx container on port 80.
+
