@@ -1,0 +1,1 @@
+docker run -v /var/run/docker.sock:/var/run/docker.sock -it autobuild https://github.com/docker-hy/docker-hy.github.io.git docker-hy.github.io lujataloteroruuskanen/coursematerial-autobuild lujataloteroruuskanen [password]
