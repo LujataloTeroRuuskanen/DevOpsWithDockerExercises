@@ -1,0 +1,33 @@
+FROM ubuntu:18.04
+
+
+# MUISTA: JOS LISÄÄT TIEDOSTOJA LAYERISSÄ (RUN-KOMENNOSSA)
+# NE PITÄÄ POISTAA SAMASSA LAYERISSÄ (SAMASSA RUN-KOMENNOSSA JOSSA NE LISÄTTIIN TAI ASENNNETTIIN)
+# EI MYÖHEMMÄSSÄ, KOSKA SITTEN IMAGE EI PIENENE (JOKAINEN LAYER KASVATTAA KOKOA, VAIKKA LAYERISSÄ POISTETTAISIIN EDELLISEN LAYERIN TIEDOSTOJA)
+
+
+ENV PATH=$PATH:/usr/local/go/bin
+
+WORKDIR /usr/backend
+COPY . /usr/backend
+
+
+RUN apt-get update -y 
+RUN apt-get install -y curl
+RUN apt-get install -y build-essential
+RUN curl https://dl.google.com/go/go1.16.14.linux-amd64.tar.gz --output /usr/local/go1.16.14.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf /usr/local/go1.16.14.linux-amd64.tar.gz
+RUN go build
+RUN go test ./...
+RUN useradd -m appuser
+RUN rm -rf /usr/local/go
+RUN rm -rf /usr/local/go1.16.14.linux-amd64.tar.gz
+RUN apt-get remove -y build-essential 
+RUN apt-get remove -y curl 
+
+USER appuser
+
+
+CMD ["./server"]
+
+

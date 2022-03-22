@@ -1,0 +1,23 @@
+FROM ubuntu:18.04
+
+ENV REACT_APP_BACKEND_URL=http://localhost/api/
+
+
+WORKDIR /usr/src/myapp
+COPY . /usr/src/myapp
+
+
+RUN apt-get update -y
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN apt-get install -y nodejs
+RUN rm -rf /var/lib/apt/lists/*
+RUN npm install
+RUN npm run build
+RUN npm install -g serve
+RUN useradd -m appuser
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+
