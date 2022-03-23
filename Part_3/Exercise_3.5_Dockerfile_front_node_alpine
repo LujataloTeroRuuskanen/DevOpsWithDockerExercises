@@ -1,0 +1,19 @@
+FROM node:16-alpine
+
+ENV REACT_APP_BACKEND_URL=http://localhost/api/
+
+
+WORKDIR /usr/src/myapp
+COPY . /usr/src/myapp
+
+
+RUN rm -rf /var/lib/apt/lists/* && \
+ npm install && \
+    npm run build && \
+    npm install -g serve && \
+    adduser -D appuser
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+

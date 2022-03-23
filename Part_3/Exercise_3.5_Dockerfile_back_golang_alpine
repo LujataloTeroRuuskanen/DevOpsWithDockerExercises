@@ -1,0 +1,16 @@
+FROM golang:1.16-alpine3.14
+
+WORKDIR /usr/backend
+COPY . /usr/backend
+
+
+RUN apk add --no-cache alpine-sdk && \ 
+   go build && \
+   go test ./... && \
+  apk del alpine-sdk  && \
+  adduser -D appuser
+
+USER appuser
+
+CMD ["./server"]
+
