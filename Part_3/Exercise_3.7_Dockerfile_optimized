@@ -1,0 +1,23 @@
+FROM debian:stable-slim
+
+# update system,  install curl, install docker, remove curl all in one layer
+RUN apt-get update -y && \
+    apt-get install -y curl && \
+     curl -fsSL https://get.docker.com -o get-docker.sh && \
+     sh get-docker.sh && \
+     apt-get install -y git && \
+     apt-get remove -y curl
+
+# copy build script to image
+WORKDIR /usr/autobuild/
+
+
+
+COPY ./build.sh ./build.sh
+RUN chmod +x ./build.sh
+
+
+
+
+# set entrypoint to build script
+ENTRYPOINT ["/usr/autobuild/build.sh"]

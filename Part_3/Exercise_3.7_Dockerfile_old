@@ -1,0 +1,22 @@
+FROM ubuntu
+
+# update system and install curl
+RUN apt-get update -y
+RUN apt-get upgrade -y  
+RUN apt-get install -y curl
+
+# install docker
+RUN curl -fsSL https://get.docker.com -o get-docker.sh
+RUN sh get-docker.sh
+
+# install git
+RUN apt-get install -y git
+
+# copy build script to image
+WORKDIR /usr/autobuild/
+
+COPY ./build.sh ./build.sh
+RUN chmod +x ./build.sh
+
+# set entrypoint to build script
+ENTRYPOINT ["/usr/autobuild/build.sh"]
